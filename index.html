@@ -114,15 +114,22 @@
       backdrop-filter: blur(18px);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 900;
-      letter-spacing: .02em;
-      color: var(--wine);
-    }
+   .brand{
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+}
+.logo{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    object-fit:cover;
+    transition:0.3s;
+}
 
+.logo:hover{
+    transform:scale(1.05);
+}
     .brand-mark {
       width: 42px;
       height: 42px;
@@ -612,7 +619,7 @@
 
     @media (max-width: 560px) {
       :root {
-        --header-height: 68px;
+        --header-height: 90px;
       }
 
       section {
@@ -669,10 +676,9 @@
   </div>
 
   <header class="site-header">
-    <a class="brand" href="#home">
-      <span class="brand-mark">S&S</span>
-      <span class="brand-text">Samiya & Suhin</span>
-    </a>
+   <a class="brand" href="#home">
+    <img src="images/logo.png" alt="Samiya & Suhin Logo" class="logo">
+</a>
 
     <button
       class="menu-button"
