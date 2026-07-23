@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#7f163d" />
+  <meta name="description" content="A special proposal website from Suhin to Samiya." />
+  <title>Samiya & Suhin 💍</title>
+
+  <style>
+    :root {
+      --wine: #7f163d;
+      --rose: #c63f6d;
+      --pink: #ef88aa;
+      --blush: #ffe1eb;
+      --pearl: #fff9fb;
+      --ink: #3f1828;
+      --muted: #7b5967;
+      --glass: rgba(255, 255, 255, .76);
+      --border: rgba(255, 255, 255, .82);
+      --shadow: 0 24px 70px rgba(90, 18, 50, .22);
+      --header-height: 76px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 94px;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      overflow-x: hidden;
+      font-family: Inter, ui-rounded, "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(255,255,255,.92), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(255,216,231,.8), transparent 28%),
+        linear-gradient(145deg, #ffe3ec 0%, #f5bad0 45%, #b6426d 100%);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(75px);
+      opacity: .4;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      width: 330px;
+      height: 330px;
+      top: -120px;
+      left: -100px;
+      background: #fff;
+    }
+
+    .orb.two {
+      width: 380px;
+      height: 380px;
+      right: -130px;
+      bottom: -120px;
+      background: #e25889;
+      animation-delay: -5s;
+    }
+
+    @keyframes drift {
+      to { transform: translate3d(42px, 30px, 0) scale(1.12); }
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding:
+        max(12px, env(safe-area-inset-top))
+        max(18px, env(safe-area-inset-right))
+        12px
+        max(18px, env(safe-area-inset-left));
+      background: rgba(255, 249, 251, .74);
+      border-bottom: 1px solid rgba(255,255,255,.7);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      color: var(--wine);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--rose), var(--wine));
+      box-shadow: 0 10px 24px rgba(127,22,61,.28);
+      font-size: 13px;
+    }
+
+    .menu-button {
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      background: rgba(255,255,255,.84);
+      box-shadow: 0 10px 24px rgba(76,22,45,.15);
+      position: relative;
+      z-index: 1100;
+    }
+
+    .menu-lines,
+    .menu-lines::before,
+    .menu-lines::after {
+      width: 21px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--wine);
+      transition: transform .25s ease, opacity .25s ease;
+      content: "";
+      display: block;
+    }
+
+    .menu-lines::before {
+      transform: translateY(-7px);
+    }
+
+    .menu-lines::after {
+      transform: translateY(5px);
+    }
+
+    .menu-button.active .menu-lines {
+      background: transparent;
+    }
+
+    .menu-button.active .menu-lines::before {
+      transform: translateY(0) rotate(45deg);
+    }
+
+    .menu-button.active .menu-lines::after {
+      transform: translateY(-2px) rotate(-45deg);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 990;
+      background: rgba(45, 9, 27, .34);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+
+    .menu-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+      width: min(88vw, 390px);
+      height: 100dvh;
+      padding:
+        calc(var(--header-height) + 22px)
+        max(24px, env(safe-area-inset-right))
+        max(28px, env(safe-area-inset-bottom))
+        28px;
+      background: rgba(255, 249, 251, .96);
+      box-shadow: -22px 0 60px rgba(70, 15, 40, .24);
+      transform: translateX(105%);
+      transition: transform .32s cubic-bezier(.2,.8,.2,1);
+      overflow-y: auto;
+    }
+
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    .menu-title {
+      margin: 0 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      color: var(--wine);
+    }
+
+    .menu-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 15px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      color: #633248;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .menu-link:hover,
+    .menu-link:focus-visible {
+      background: var(--blush);
+      transform: translateX(4px);
+      outline: none;
+    }
+
+    .menu-icon {
+      width: 28px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    main {
+      padding-top: calc(var(--header-height) + 20px);
+    }
+
+    section {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto 28px;
+      scroll-margin-top: 96px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: calc(100dvh - var(--header-height) - 42px);
+      display: grid;
+      place-items: center;
+      padding: clamp(32px, 7vw, 76px);
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(198,63,109,.11);
+      color: var(--wine);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .hero-ring {
+      display: block;
+      margin: 20px auto 14px;
+      font-size: clamp(64px, 13vw, 100px);
+      line-height: 1;
+      filter: drop-shadow(0 16px 22px rgba(127,22,61,.22));
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.08) rotate(-4deg); }
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--wine);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 9vw, 84px);
+      line-height: .96;
+      letter-spacing: -.045em;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 24px auto;
+      color: var(--muted);
+      font-size: clamp(17px, 2.4vw, 21px);
+      line-height: 1.7;
+    }
+
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 16px 28px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--rose), var(--wine));
+      box-shadow: 0 16px 32px rgba(127,22,61,.3);
+    }
+
+    .section-content {
+      padding: clamp(28px, 6vw, 64px);
+    }
+
+    .section-heading {
+      margin: 0 0 12px;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1;
+    }
+
+    .section-intro {
+      max-width: 700px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .story-grid,
+    .memory-grid,
+    .reasons-grid,
+    .gallery-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .story-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .story-card,
+    .reason-card,
+    .memory-card,
+    .gallery-card {
+      padding: 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.67);
+      border: 1px solid rgba(255,255,255,.8);
+      box-shadow: 0 14px 34px rgba(88,24,52,.09);
+    }
+
+    .story-card span,
+    .reason-card span,
+    .memory-card span {
+      font-size: 30px;
+    }
+
+    .story-card h3,
+    .reason-card h3,
+    .memory-card h3 {
+      margin: 14px 0 8px;
+      color: var(--wine);
+    }
+
+    .story-card p,
+    .reason-card p,
+    .memory-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery-card {
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(127,22,61,.08), rgba(127,22,61,.08)),
+        rgba(255,255,255,.64);
+      border: 2px dashed rgba(127,22,61,.2);
+      color: var(--muted);
+    }
+
+    .gallery-card strong {
+      display: block;
+      margin-top: 10px;
+      color: var(--wine);
+    }
+
+    .reasons-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .special-message {
+      text-align: center;
+      padding: clamp(36px, 7vw, 76px);
+    }
+
+    .special-message blockquote {
+      max-width: 760px;
+      margin: 18px auto 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--wine);
+      font-size: clamp(25px, 4vw, 40px);
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    .memory-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .proposal {
+      padding: clamp(30px, 6vw, 64px);
+      text-align: center;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+    }
+
+    .proposal-question.hide,
+    .success {
+      display: none;
+    }
+
+    .success.show {
+      display: block;
+      animation: enter .55s ease;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .proposal h2,
+    .success h2 {
+      margin: 12px 0;
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: .98;
+    }
+
+    .proposal-copy {
+      max-width: 620px;
+      margin: 18px auto 28px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .button-stage {
+      min-height: 110px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .proposal button {
+      min-width: 164px;
+      min-height: 60px;
+      border: 0;
+      border-radius: 999px;
+      padding: 17px 30px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    #yesBtn {
+      color: white;
+      background: linear-gradient(135deg, var(--rose), var(--wine));
+      box-shadow: 0 16px 32px rgba(127,22,61,.3);
+    }
+
+    #noBtn {
+      position: relative;
+      z-index: 1200;
+      color: #765260;
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 12px 26px rgba(63,24,40,.16);
+      transition: left .18s ease, top .18s ease, transform .16s ease;
+    }
+
+    #noBtn.running {
+      transform: rotate(-4deg) scale(.96);
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: #9a7483;
+      font-size: 13px;
+    }
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .contact-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .contact-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 54px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 900;
+      color: var(--wine);
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(255,255,255,.84);
+    }
+
+    footer {
+      padding: 14px 18px 34px;
+      text-align: center;
+      color: rgba(63,24,40,.72);
+      font-weight: 700;
+    }
+
+    .sparkle,
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1400;
+    }
+
+    .sparkle {
+      font-size: 20px;
+      animation: sparkle .75s ease-out forwards;
+    }
+
+    @keyframes sparkle {
+      from { opacity: 1; transform: translate(-50%,-50%) scale(.5); }
+      to { opacity: 0; transform: translate(-50%,-90%) scale(1.6) rotate(180deg); }
+    }
+
+    .confetti {
+      top: -30px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(115vh) rotate(900deg); opacity: .9; }
+    }
+
+    @media (max-width: 820px) {
+      .story-grid,
+      .gallery-grid,
+      .memory-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reasons-grid,
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      :root {
+        --header-height: 68px;
+      }
+
+      section {
+        width: min(100% - 20px, 1120px);
+        margin-bottom: 18px;
+      }
+
+      .panel {
+        border-radius: 24px;
+      }
+
+      .hero,
+      .section-content,
+      .proposal {
+        padding: 28px 18px;
+      }
+
+      .hero-copy,
+      .proposal-copy {
+        line-height: 1.55;
+      }
+
+      .button-stage {
+        min-height: 170px;
+        flex-direction: column;
+      }
+
+      .proposal button {
+        width: min(100%, 280px);
+        min-height: 62px;
+      }
+
+      .brand-text {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#home">
+      <span class="brand-mark">S&S</span>
+      <span class="brand-text">Samiya & Suhin</span>
+    </a>
+
+    <button
+      class="menu-button"
+      id="menuButton"
+      type="button"
+      aria-label="Open menu"
+      aria-controls="sideMenu"
+      aria-expanded="false"
+    >
+      <span class="menu-lines"></span>
+    </button>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <nav class="side-menu" id="sideMenu" aria-label="Main navigation">
+    <h2 class="menu-title">Our Menu 💕</h2>
+
+    <div class="menu-list">
+      <a class="menu-link" href="#home"><span class="menu-icon">🏠</span>Home</a>
+      <a class="menu-link" href="#our-story"><span class="menu-icon">📖</span>Our Story</a>
+      <a class="menu-link" href="#photo-gallery"><span class="menu-icon">📸</span>Photo Gallery</a>
+      <a class="menu-link" href="#reasons"><span class="menu-icon">❤️</span>Reasons I Love You</a>
+      <a class="menu-link" href="#special-message"><span class="menu-icon">💌</span>Special Message</a>
+      <a class="menu-link" href="#memories"><span class="menu-icon">✨</span>Our Memories</a>
+      <a class="menu-link" href="#proposal"><span class="menu-icon">💍</span>Proposal</a>
+      <a class="menu-link" href="#contact"><span class="menu-icon">📱</span>Contact Suhin</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="home">
+      <div class="panel hero">
+        <div>
+          <div class="eyebrow">A love story made for forever</div>
+          <span class="hero-ring">💍</span>
+          <h1>Samiya & Suhin</h1>
+          <p class="hero-copy">
+            A little corner of the internet created with love, memories,
+            laughter, and one very important question.
+          </p>
+          <a class="primary-link" href="#our-story">Begin our story 💖</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="our-story">
+      <div class="panel section-content">
+        <h2 class="section-heading">Our Story</h2>
+        <p class="section-intro">
+          Every beautiful relationship is made of small moments that slowly
+          become a lifetime. These are the chapters that brought Samiya and Suhin here.
+        </p>
+
+        <div class="story-grid">
+          <article class="story-card">
+            <span>✨</span>
+            <h3>How We Met</h3>
+            <p>Add the story of the first time Samiya and Suhin met.</p>
+          </article>
+
+          <article class="story-card">
+            <span>💕</span>
+            <h3>How We Grew</h3>
+            <p>Add a favorite moment that made the relationship stronger.</p>
+          </article>
+
+          <article class="story-card">
+            <span>🌹</span>
+            <h3>Where We Are Now</h3>
+            <p>Two hearts ready to begin their most beautiful chapter.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="photo-gallery">
+      <div class="panel section-content">
+        <h2 class="section-heading">Photo Gallery</h2>
+        <p class="section-intro">
+          Replace these placeholders with your favorite photos together.
+        </p>
+
+        <div class="gallery-grid">
+          <div class="gallery-card">📷<strong>First Favorite Photo</strong></div>
+          <div class="gallery-card">🌅<strong>A Beautiful Day Together</strong></div>
+          <div class="gallery-card">🥰<strong>Our Happiest Memory</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reasons">
+      <div class="panel section-content">
+        <h2 class="section-heading">Reasons I Love You</h2>
+        <p class="section-intro">
+          Just a few of the countless reasons Suhin loves Samiya.
+        </p>
+
+        <div class="reasons-grid">
+          <article class="reason-card">
+            <span>😊</span>
+            <h3>Your Smile</h3>
+            <p>Your smile can make even an ordinary day feel beautiful.</p>
+          </article>
+
+          <article class="reason-card">
+            <span>🤍</span>
+            <h3>Your Heart</h3>
+            <p>Your kindness, care, and warmth make you truly special.</p>
+          </article>
+
+          <article class="reason-card">
+            <span>🌟</span>
+            <h3>Your Strength</h3>
+            <p>You inspire me to become a better person every day.</p>
+          </article>
+
+          <article class="reason-card">
+            <span>🏡</span>
+            <h3>You Feel Like Home</h3>
+            <p>With you, I feel understood, peaceful, and complete.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="special-message">
+      <div class="panel special-message">
+        <div class="eyebrow">A message from Suhin</div>
+        <blockquote>
+          “Samiya, you are my favorite person, my safest place, and the future
+          I want to choose every single day.”
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="memories">
+      <div class="panel section-content">
+        <h2 class="section-heading">Our Memories</h2>
+        <p class="section-intro">
+          Add your own dates, places, and stories to make this section personal.
+        </p>
+
+        <div class="memory-grid">
+          <article class="memory-card">
+            <span>☕</span>
+            <h3>Our First Outing</h3>
+            <p>Write a short memory about your first special day together.</p>
+          </article>
+
+          <article class="memory-card">
+            <span>🎂</span>
+            <h3>A Celebration</h3>
+            <p>Add a birthday, anniversary, or unforgettable celebration.</p>
+          </article>
+
+          <article class="memory-card">
+            <span>🌍</span>
+            <h3>Our Adventure</h3>
+            <p>Add a trip, journey, or place that means a lot to both of you.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proposal">
+      <div class="panel proposal">
+        <div class="proposal-question" id="proposalQuestion">
+          <div class="eyebrow">One question • One forever</div>
+          <span class="hero-ring">💍</span>
+          <h2>Samiya, will you marry me?</h2>
+
+          <p class="proposal-copy">
+            You are the peace in my heart and the person I want beside me
+            through every season of life. Every future I imagine has you in it.
+          </p>
+
+          <div class="button-stage">
+            <button id="yesBtn" type="button">Yes, Suhin 💖</button>
+            <button id="noBtn" type="button">No</button>
+          </div>
+
+          <div class="hint" id="hint">Try tapping “No” 😄</div>
+        </div>
+
+        <div class="success" id="success">
+          <span class="hero-ring">💖</span>
+          <h2>Samiya said yes!</h2>
+          <p class="proposal-copy">
+            Two hearts, one promise, and a beautiful forever waiting to begin.
+            Here is to Samiya and Suhin. 💍✨
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="panel section-content contact-card">
+        <div>
+          <h2 class="section-heading">Contact Suhin</h2>
+          <p class="section-intro">
+            Replace the example details with Suhin's real phone number, email,
+            or social media profile.
+          </p>
+        </div>
+
+        <div class="contact-actions">
+          <a class="contact-button" href="tel:+94740186854">📞 Call Suhin</a>
+          <a class="contact-button" href="mailto:suhinahmad08@outlook.com">💌 Email Suhin</a>
+          <a class="contact-button" href="#proposal">💍 Return to Proposal</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Made with ❤️ by Suhin for Samiya</footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const sideMenu = document.getElementById("sideMenu");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const menuLinks = document.querySelectorAll(".menu-link");
+
+    function setMenu(open) {
+      sideMenu.classList.toggle("open", open);
+      menuOverlay.classList.toggle("show", open);
+      menuButton.classList.toggle("active", open);
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      document.body.classList.toggle("menu-open", open);
+    }
+
+    menuButton.addEventListener("click", () => {
+      setMenu(!sideMenu.classList.contains("open"));
+    });
+
+    menuOverlay.addEventListener("click", () => setMenu(false));
+    menuLinks.forEach(link => link.addEventListener("click", () => setMenu(false)));
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") setMenu(false);
+    });
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const hint = document.getElementById("hint");
+    const proposalQuestion = document.getElementById("proposalQuestion");
+    const success = document.getElementById("success");
+
+    const noMessages = [
+      "Nope 😄",
+      "Too slow 💨",
+      "Try again 😂",
+      "Catch me 😜",
+      "Choose love 💕",
+      "Yes is easier 💖"
+    ];
+
+    const hintMessages = [
+      "That button is shy 😄",
+      "It really does not want to be tapped 😂",
+      "Suhin is waiting for your yes 💕",
+      "The heart already knows the answer 💖"
+    ];
+
+    let attempts = 0;
+    let lastMove = 0;
+
+    function sparkle(x, y) {
+      const item = document.createElement("span");
+      item.className = "sparkle";
+      item.textContent = ["✨", "💖", "💕"][Math.floor(Math.random() * 3)];
+      item.style.left = `${x}px`;
+      item.style.top = `${y}px`;
+      document.body.appendChild(item);
+      setTimeout(() => item.remove(), 800);
+    }
+
+    function nextPosition() {
+      const width = window.visualViewport?.width || window.innerWidth;
+      const height = window.visualViewport?.height || window.innerHeight;
+      const padding = width < 560 ? 18 : 24;
+      const bw = noBtn.offsetWidth || 164;
+      const bh = noBtn.offsetHeight || 60;
+      const maxX = Math.max(padding, width - bw - padding);
+      const maxY = Math.max(padding, height - bh - padding);
+
+      const positions = [
+        { x: padding, y: padding + 72 },
+        { x: maxX, y: padding + 72 },
+        { x: padding, y: maxY },
+        { x: maxX, y: maxY },
+        { x: width * .08, y: height * .4 },
+        { x: width * .58, y: height * .32 },
+        { x: width * .34, y: height * .16 },
+        { x: width * .34, y: height * .76 }
+      ].map(p => ({
+        x: Math.min(Math.max(p.x, padding), maxX),
+        y: Math.min(Math.max(p.y, padding + 72), maxY)
+      }));
+
+      return positions[Math.floor(Math.random() * positions.length)];
+    }
+
+    function moveNoButton() {
+      const rect = noBtn.getBoundingClientRect();
+      sparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+      const pos = nextPosition();
+      noBtn.classList.add("running");
+      noBtn.style.position = "fixed";
+      noBtn.style.left = `${pos.x}px`;
+      noBtn.style.top = `${pos.y}px`;
+      noBtn.textContent = noMessages[attempts % noMessages.length];
+      hint.textContent = hintMessages[attempts % hintMessages.length];
+
+      attempts++;
+      setTimeout(() => noBtn.classList.remove("running"), 220);
+    }
+
+    function dodge(event) {
+      const now = Date.now();
+
+      if (now - lastMove < 240) {
+        event.preventDefault();
+        return;
+      }
+
+      lastMove = now;
+      event.preventDefault();
+      event.stopPropagation();
+      moveNoButton();
+      noBtn.blur();
+    }
+
+    noBtn.addEventListener("touchstart", dodge, { passive: false });
+    noBtn.addEventListener("mouseenter", dodge, { passive: false });
+    noBtn.addEventListener("pointerdown", event => {
+      if (event.pointerType !== "touch") dodge(event);
+    }, { passive: false });
+    noBtn.addEventListener("click", dodge, { passive: false });
+
+    yesBtn.addEventListener("click", () => {
+      proposalQuestion.classList.add("hide");
+      success.classList.add("show");
+      noBtn.style.display = "none";
+      launchConfetti();
+    });
+
+    function launchConfetti() {
+      const symbols = ["💖", "💕", "✨", "💍", "🎉", "🌹"];
+
+      for (let i = 0; i < 110; i++) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+
+        if (i % 3 === 0) {
+          piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          piece.style.fontSize = `${14 + Math.random() * 17}px`;
+        } else {
+          piece.style.width = `${8 + Math.random() * 7}px`;
+          piece.style.height = `${12 + Math.random() * 10}px`;
+          piece.style.borderRadius = "3px";
+          piece.style.background = `hsl(${330 + Math.random() * 45}, 80%, ${58 + Math.random() * 20}%)`;
+        }
+
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.animationDuration = `${2.5 + Math.random() * 2.5}s`;
+        piece.style.animationDelay = `${Math.random() * 1.1}s`;
+
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5500);
+      }
+    }
+  </script>
+</body>
+</html>
