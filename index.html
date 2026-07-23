@@ -95,10 +95,8 @@
     }
 
     .site-header {
-      position: fixed;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
       height: var(--header-height);
       z-index: 1000;
       display: flex;
@@ -269,9 +267,9 @@
       font-size: 20px;
     }
 
-    main {
-      padding-top: calc(var(--header-height) + 20px);
-    }
+   main {
+  padding-top: 20px;
+}
 
     section {
       width: min(1120px, calc(100% - 32px));
@@ -624,9 +622,24 @@
     }
 
     @media (max-width: 560px) {
-      :root {
-        --header-height: 90px;
-      }
+    :root {
+    --header-height: 70px;
+}
+
+.site-header {
+    height: var(--header-height);
+    padding: 8px 14px;
+}
+
+.logo {
+    width: 62px;
+    height: 62px;
+}
+
+.menu-button {
+    width: 46px;
+    height: 46px;
+}
 
       section {
         width: min(100% - 20px, 1120px);
