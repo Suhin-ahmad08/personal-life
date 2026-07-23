@@ -19,7 +19,7 @@
       --glass: rgba(255, 255, 255, .76);
       --border: rgba(255, 255, 255, .82);
       --shadow: 0 24px 70px rgba(90, 18, 50, .22);
-      --header-height: 76px;
+      --header-height: 90px;
     }
 
     * {
@@ -120,11 +120,15 @@
     text-decoration:none;
 }
 .logo{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    object-fit:cover;
-    transition:0.3s;
+    width:78px;
+    height:78px;
+    object-fit:contain;
+    display:block;
+    transition:.3s;
+}
+
+.logo:hover{
+    transform:scale(1.05);
 }
 
 .logo:hover{
@@ -677,7 +681,7 @@
 
   <header class="site-header">
    <a class="brand" href="#home">
-    <img src="images/logo.png" alt="Samiya & Suhin Logo" class="logo">
+   <img src="logo.png" alt="Samiya & Suhin Logo" class="logo">
 </a>
 
     <button
@@ -936,12 +940,7 @@ document.addEventListener("keydown", function(e){
         setMenu(false);
     }
 });
-    menuOverlay.addEventListener("click", () => setMenu(false));
-    menuLinks.forEach(link => link.addEventListener("click", () => setMenu(false)));
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") setMenu(false);
-    });
+   
 
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
