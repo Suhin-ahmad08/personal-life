@@ -904,10 +904,26 @@
       document.body.classList.toggle("menu-open", open);
     }
 
-    menuButton.addEventListener("click", () => {
-      setMenu(!sideMenu.classList.contains("open"));
-    });
+   menuButton.addEventListener("click", function () {
 
+    if (sideMenu.classList.contains("open")) {
+        setMenu(false);
+    } else {
+        setMenu(true);
+    }
+
+});
+menuOverlay.addEventListener("click", () => setMenu(false));
+
+menuLinks.forEach(link => {
+    link.addEventListener("click", () => setMenu(false));
+});
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+        setMenu(false);
+    }
+});
     menuOverlay.addEventListener("click", () => setMenu(false));
     menuLinks.forEach(link => link.addEventListener("click", () => setMenu(false)));
 
